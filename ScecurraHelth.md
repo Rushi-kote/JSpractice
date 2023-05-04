@@ -121,8 +121,7 @@ Redux is a state management library that helps you manage the state of your appl
     4. Dispatch: Dispatching an action is the only way to modify the state in Redux. When you dispatch an action, it is sent to the store, which in turn sends it to the reducer. The reducer then calculates the new state based on the action, and returns the updated state.
 
     5. Subscribe: Subscribing to the store allows you to listen for changes to the state. Whenever the state changes, the callback function you provide will be called with the updated state. You can use this to update your UI or trigger other side effects.
-
-    ```js
+```js
     import React from 'react';
     import { createStore } from 'redux';
 
@@ -167,7 +166,7 @@ Redux is a state management library that helps you manage the state of your appl
     }
 
     export default Counter;
-    ```
+```
 
 Q8. What is Cloures in JS ?
 -->
