@@ -240,4 +240,146 @@ A.Swap 2 number
 
     Each of these routers has its own use case and is suitable for different types of applications. It's important to choose the right router based on the requirements of your project and the features and functionality that you need.
 
+Q12. Hooks in react
+-->
+    Hooks are a new feature introduced in React 16.8 that allow you to use state and other React features in functional components. Hooks provide a way to reuse stateful logic between components and to manage state in a more flexible and intuitive way.
+
+    Here are some of the most commonly used hooks in React:
+
+    useState: This hook allows you to add state to a functional component. It takes an initial value and returns an array with two values: the current state value and a function to update the state.
+
+    useEffect: This hook allows you to perform side effects in a functional component. It takes a function and runs it after every render. You can use this hook to fetch data, update the DOM, or perform other side effects.
+
+    useContext: This hook allows you to access a context object created by the Context API. It takes a context object and returns its current value.
+
+    useRef: This hook allows you to create a reference to a DOM node or a value that persists between renders. It takes an initial value and returns an object with a current property that holds the current value.
+
+    useCallback: This hook allows you to memoize a function and reuse it between renders. It takes a function and an array of dependencies and returns a memoized version of the function.
+
+    useMemo: This hook allows you to memoize a value and reuse it between renders. It takes a function and an array of dependencies and returns a memoized version of the value.
+
+    There are many other hooks available in React, and they provide a powerful way to manage state and side effects in functional components. Hooks are designed to be composable and reusable, and they allow you to write more expressive and declarative code.
+
+Q13. useMemo and useCallback ?
+-->
+    useMemo and useCallback are two hooks in React that are used to optimize performance by memoizing values and functions.
+    useMemo takes two arguments: a function that returns a value, and an array of dependencies. The function is only called when the dependencies change, and the result is memoized (cached) so that it doesn't need to be recalculated on subsequent renders. This can be useful for expensive calculations or when you need to prevent unnecessary re-renders.
     
+```js
+    import React, { useMemo } from 'react';
+
+    function MyComponent(props) {
+    const { data } = props;
+
+    const sortedData = useMemo(() => {
+        return data.sort();
+    }, [data]);
+
+    return (
+        <div>
+        <ul>
+            {sortedData.map((item) => (
+            <li key={item}>{item}</li>
+            ))}
+        </ul>
+        </div>
+    );
+    }
+```
+useCallback is similar to useMemo, but it's used for memoizing functions instead of values. It takes a function and an array of dependencies, and returns amemoized version of the function. This can be useful for preventing unnecessary re-renders of child components when a function is passed down as a prop.
+Here's an example of using useCallback:
+```js
+import React, { useCallback } from 'react';
+
+    function MyComponent(props) {
+    const { onButtonClick } = props;
+
+    const handleClick = useCallback(() => {
+        onButtonClick('clicked');
+    }, [onButtonClick]);
+
+    return (
+        <div>
+        <button onClick={handleClick}>Click me</button>
+        </div>
+    );
+    }
+```
+
+Q14. what is the use ContextApi in place redux ?
+-->
+  Context API is a feature in React that allows you to share data between components without having to pass props down the component tree manually. It provides a way to pass data through the component tree without having to pass props down manually at every level.
+     You can use the Context API as a replacement for Redux in certain cases, especially when your application doesn't have complex state management needs. Redux can be overkill for small to medium-sized applications, and using the Context API can simplify your code and reduce the amount of boilerplate.
+Here's an example of using the Context API to manage state:
+```js
+import React, { createContext, useState } from 'react';
+
+const MyContext = createContext();
+
+function MyProvider(props) {
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const decrement = () => {
+    setCount(count - 1);
+  };
+
+  return (
+    <MyContext.Provider value={{ count, increment, decrement }}>
+      {props.children}
+    </MyContext.Provider>
+  );
+}
+
+function MyComponent() {
+  const { count, increment, decrement } = useContext(MyContext);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <MyProvider>
+      <MyComponent />
+    </MyProvider>
+  );
+}
+```
+
+Q15. what are eventloop ?
+-->
+In JavaScript, the event loop is a mechanism for handling asynchronous operations. It's a fundamental part of the JavaScript runtime, and it's responsible for coordinating the execution of code in a way that allows for non-blocking I/O and asynchronous processing.
+
+The event loop is a loop that continually checks the call stack and the task queue. When the call stack is empty, the event loop checks the task queue for any tasks that need to be executed. If there are tasks in the task queue, the event loop moves them to the call stack and executes them. This process continues until the task queue is empty.
+
+Here's an example of how the event loop works:
+```js
+console.log('1');
+
+setTimeout(() => {
+  console.log('2');
+}, 1000);
+
+console.log('3');
+```
+In this example, we're logging the numbers 1, 2, and 3 to the console, with a 1-second delay before logging the number 2. Here's what happens:
+
+`1.The first console.log statement logs the number 1 to the console.`
+`2.The setTimeout function is called, which adds a task to the task queue to log the number 2 to the console after a 1-second delay.`
+`3.The second console.log statement logs the number 3 to the console.`
+`4.The call stack is now empty, so the event loop checks the task queue and finds the task to log the number 2 to the console.`
+`5.The event loop moves the task from the task queue to the call stack, and the number 2 is logged to the console.`
+`6.The task is removed from the call stack, and the event loop checks the task queue again. Since the task queue is now empty, the event loop stops checking and the program ends.`
+
+This is a simple example of how the event loop works, but it's important to understand how it operates in order to write effective and efficient asynchronous JavaScript code.
+
+
